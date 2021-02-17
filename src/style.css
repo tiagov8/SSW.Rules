@@ -677,7 +677,10 @@ pre {
   line-height: initial;
   position: relative
 }
-.greybox p:last-child {margin-bottom:0;}
+
+.greybox p:last-child, .highlight p:last-child, .info p:last-child, .china p:last-child, .todo p:last:child{
+  margin-bottom:0;
+}
 
 .custom-control-inline {
   display: -ms-inline-flexbox;
@@ -742,7 +745,7 @@ b, strong {
   font-weight: bold;
 }
 
-.rule-content a {
+.rule-content a, .rule-category-top a {
   &:not(.unstyled):not(.action-btn-link):not(.action-btn-link-underlined) {
     color: #222;
     text-decoration: none;
@@ -770,10 +773,15 @@ h6.top-category-header button {
 }
 
 h6.top-category-header .number {
-  padding: 0 .5rem;
+  padding: 0 0.7rem;
   opacity: .5;
   position: absolute;
   right: 1rem;
+}
+
+.number p {
+  text-transform: none;
+  display: 'inline-block';
 }
 
 h6.top-category-header .collapse-icon {
@@ -1004,6 +1012,10 @@ blockquote p:before {
   color: #414141;
 }
 
+.rule-content h4 {
+  word-break: break-word;
+}
+
 .rule-content a,
 .rule-category a {
   text-decoration:underline;
@@ -1098,6 +1110,7 @@ blockquote p:before {
 .rule-content figure figcaption {
   margin: 0.5rem 0.5rem 6px;
   font-weight: bold;
+  word-break: break-word;
 }
 
 .rule-content figure figcaption.bad-example:before {
@@ -1208,6 +1221,32 @@ blockquote p:before {
   padding: 10px;
   margin: 0 0 20px;
   border: 1px solid #ccc;
+}
+
+.secret-content-heading h4 {
+  bottom: 0;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  position: relative;
+}
+
+.secret-content-heading:before {
+  content: "\f21b ";
+  font-family: FontAwesome;
+  font-size: 28px;
+  font-weight: normal;
+  text-decoration: inherit;
+  color: #CC4141;
+  padding-right: 1rem;
+  float: left;
+  line-height: normal;
+}
+
+.rule-content .secret-content {
+  padding: 10px;
+  margin: 0 0 20px;
+  border: 1px dashed #999999;
+  background-color: #EEEEEE;
 }
 
 .rule-single {
@@ -1406,6 +1445,25 @@ blockquote p:before {
   display: inline-block;
 }
 
+.tooltip .tooltiptext {
+  left: 65%;
+  margin-left: -60px;
+}
+
+.github-tooltip {
+  height: 1.7rem;
+  margin: auto 1rem auto auto;
+  font-size: 1.8rem !important;
+  position: relative;
+  display: inline-block;
+}
+
+.react-tooltip .tooltiptext {
+  margin-left: -53px !important;
+  bottom: 90%;
+  width: 80px; 
+}
+
 .tooltiptext {
   visibility: hidden;
   width: 100px;
@@ -1421,18 +1479,14 @@ blockquote p:before {
   transition: opacity 0.2s;
 }
 
-.tooltip .tooltiptext {
-  left: 65%;
-  margin-left: -60px;
+.github-tooltip .tooltiptext {
+  margin-left: 0 !important;
+  bottom: 2.5rem;
+  left: -1.6rem;
+  width: 5rem; 
 }
 
-.react-tooltip .tooltiptext {
-  margin-left: -60px !important;
-  bottom: 90%;
-  width: 80px; 
-}
-
-.tooltip .tooltiptext::after, .react-tooltip .tooltiptext::after {
+.tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -1444,7 +1498,7 @@ blockquote p:before {
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext, .react-tooltip:hover .tooltiptext {
+.tooltip:hover .tooltiptext, .react-tooltip:hover .tooltiptext, .github-tooltip:hover .tooltip {
   visibility: visible;
   opacity: 1;
   padding: 0.2rem !important;
@@ -1457,9 +1511,10 @@ blockquote p:before {
   position: relative;
   border-radius: 30%;
   z-index: 21;
+  padding-left: 1.5rem;
 }
 
-.dropdown-list, .dropdown-list-center  {
+.dropdown-list {
   margin: 1rem;
   padding: 0 0.8rem;
   position: absolute;
@@ -1468,9 +1523,9 @@ blockquote p:before {
   font-size: 12px;
   box-shadow: 0px 5px 11px 0px rgba(130,130,130,0.8);
   border-radius: 5%;
-  width: 13rem;
+  width: 13.7rem;
   height: auto;
-  right: -1rem;
+  right: -2rem;
 }
 
 .dropdown-userinfo-container {
@@ -1542,7 +1597,7 @@ blockquote p:before {
   text-shadow: 0 -5px 5px rgba(130,130,130,0.3);
   font-size: 1.45rem;
   text-align: center;
-  left: 1.1rem;
+  left: 2.5rem;
   bottom: -27px;
   z-index: 21;
 }
@@ -1550,12 +1605,9 @@ blockquote p:before {
 /* Profile Page
 -------------------------------------------------- */
 
-.logged-out-message {
+.no-content-message {
   text-align: center;
-}
-
-.logged-out-message button {
-  margin-top: 1rem;
+  margin: 2rem auto;
 }
 
 .profile-header {
@@ -1599,16 +1651,9 @@ blockquote p:before {
   grid-row-end: 3;
 }
 
-.error-text {
-  text-align: center;
-}
-
 @media screen and (max-width: 600px) {
   .reaction-grid {
     grid-template-columns: auto 2rem 0.5rem 1rem 2.2rem 0.5rem 1rem 2.2rem 0.5rem 1rem 2.2rem 1rem auto;
-  }
-  .profile-header {
-    height: auto;
   }
   .profile-image {
     visibility: hidden;
@@ -1629,22 +1674,11 @@ blockquote p:before {
   .username {
     grid-column: 1;
   }
-  .filter-menu {
-    grid-template-columns: auto !important;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0 !important;
-  }
-  .menu-item {
-    grid-column: 1 !important;
-  }
   .rule-content-title {
     padding: 0 !important;
   }
-
-  .dropdown-list-center { 
-    margin: 1rem;
-    right: -8rem;
+  .remove-item {
+    padding: 0 !important;
   }
 }
 @media screen and (max-width: 1024px) {
@@ -1659,6 +1693,20 @@ blockquote p:before {
   }
   .profile-large-name {
     font-size: 1.7rem !important;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .filter-menu {
+    grid-template-columns: auto !important;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0 !important;
+  }
+  .bookmarks-item, .somewhat-agree-item, .somewhat-disagree-item, .really-agree-item, .really-disagree-item, .comments-item {
+    grid-column: 1 !important;
+  }
+  .profile-header {
+    height: auto;
   }
 }
 
@@ -1681,12 +1729,11 @@ blockquote p:before {
 
 .filter-menu {
   top: 1.5rem;
-  left: 7.1rem;
   position: relative;
   display: grid;
-  grid-template-columns: 8rem 8rem 10rem 12rem 10rem;
+  grid-template-columns: auto auto auto auto auto auto; 
   font-weight: bold;
-  column-gap: 1.5rem;
+  column-gap: 1rem;
 }
 
 .radio-button-1 {
@@ -1699,7 +1746,7 @@ blockquote p:before {
   grid-column: 4;
 }
 
-.menu-item {
+.bookmarks-item, .somewhat-agree-item, .somewhat-disagree-item, .really-agree-item, .really-disagree-item, .comments-item {
  padding: 0 0.5rem 0.5rem;
  text-align: center;
  font-weight: normal;
@@ -1709,11 +1756,41 @@ blockquote p:before {
  margin: auto;
 }
 
-.menu-item:hover {
+.bookmarks-item:hover, .really-agree-item:hover, .somewhat-agree-item:hover, .really-disagree-item:hover, .somewhat-disagree-item:hover, .comments-item:hover {
   padding: 0 0.5rem 0.25rem;
   border-bottom: 0.25rem solid rgba(0, 0, 0, 0.60);
   opacity: 0.7;
   cursor: pointer;
+}
+
+.bookmarks-item:before, .really-agree-item:before, .somewhat-agree-item:before, .really-disagree-item:before, .somewhat-disagree-item:before, .comments-item:before  {
+  padding-right: 0.5rem;
+  font-family: FontAwesome;
+}
+
+.really-agree-item:before {
+  content: '\f005';
+  color: gold;
+}
+
+.somewhat-agree-item:before {
+  content: '\f164';
+  color: green;
+} 
+
+.somewhat-disagree-item:before {
+  content: '\f165';
+  color: #CC4141;
+}
+
+.really-disagree-item:before {
+  content: '\f00D';
+  color: #CC4141;
+}
+
+.comments-item:before {
+  content: '\f075';
+  /* color: #CC4141; */
 }
 
 .heading-container {
@@ -1734,6 +1811,12 @@ blockquote p:before {
   height: 2rem;
   font-size: 1.8rem !important;
   margin: auto auto auto 0;
+}
+
+.filter-menu-bookmark-icon {
+  margin: auto 0.1rem auto auto;
+  height: 1rem;
+  width: 1.8rem
 }
 
 .rule-heading-really-agree:after {
@@ -1764,16 +1847,16 @@ blockquote p:before {
   margin-left: 1rem;
 }
 
-.remove-item {
+.remove-item, .github-comment-link {
   margin-left: auto;
   right: 3rem;
+  margin: auto 1rem auto auto;
+  font-size: 1.8rem !important;
 }
 
 .remove-item:after {
   content: '\f057';
   font-family: FontAwesome;
-  margin: auto 1rem auto auto;
-  font-size: 1.8rem !important;
   color: #ddd;
 }
 
