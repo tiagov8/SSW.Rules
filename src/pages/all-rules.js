@@ -244,8 +244,10 @@ const AllRules = ({ location, data }) => {
 
     const filterSort = filter === FilterOptions.Nr ? 1 : -1;
 
+    let calcInput = input >= 365 ? `${input / 365} years` : `${input} days`;
+
     setFilterTitle(
-      `${filter} - ${select} ${input ? ' - Last ' + input + ' days' : ''}`
+      `${filter} - ${select} ${input ? ' - Last ' + calcInput : ''}`
     );
 
     if (filteredRules.length === 0) {

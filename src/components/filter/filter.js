@@ -68,13 +68,13 @@ const Filter = ({ selected, close }) => {
           setOpen(!open);
         }}
       >
-        <FontAwesomeIcon className="text-lg" color="white" icon={faSlidersH} />
+        <FontAwesomeIcon size="lg" color="white" icon={faSlidersH} />
       </button>
 
       {open && (
         <>
-          <div className="dropdown-list w-72 z-50	" ref={dropDownRef}>
-            <div className="dropdown-container">
+          <div className="dropdown-list-filter w-72 z-50	" ref={dropDownRef}>
+            <div className="dropdown-container-filter">
               <div className="py-1 " role="none">
                 <div
                   className="grid grid-cols-3 justify-items-center mt-3"

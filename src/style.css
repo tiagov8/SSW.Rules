@@ -1845,6 +1845,30 @@ div.greybox {
   z-index: 21;
 }
 
+/* Dropdown All Rules Page
+-------------------------------------------------- */
+
+.dropdown-filter {
+  position: relative;
+  z-index: 21;
+  padding-left: 1.5rem;
+}
+
+.dropdown-list-filter {
+  margin: 1rem 2rem 1rem 1rem;
+  padding: 0 0.8rem;
+  position: absolute;
+  background-color: white;
+  color: grey;
+  font-size: 12px;
+  box-shadow: 0px 5px 11px 0px rgba(130,130,130,0.8);
+  border-radius: 2%;
+  width: 13.7rem;
+  height: auto;
+  right: -2rem;
+}
+
+
 /* Profile Page
 -------------------------------------------------- */
 
