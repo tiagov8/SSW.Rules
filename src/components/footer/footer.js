@@ -48,7 +48,7 @@ const Footer = () => {
                 <span className="px-2">|</span>
                 <a
                   className="footer-link"
-                  href="https://www.ssw.com.au/ssw/Standards/Forms/ConsultingOrderTermsConditions.aspx"
+                  href="https://www.ssw.com.au/ssw/Consulting/Terms-and-Conditions/"
                 >
                   TERMS AND CONDITIONS
                 </a>
@@ -56,23 +56,22 @@ const Footer = () => {
                 <div className="inline-flex flex-row-reverse justify-end flex-nowrap">
                   <a
                     className="unstyled social-media-icon"
-                    id="youtube-icon"
-                    title="SSW on YouTube"
-                    href="https://www.youtube.com/user/sswtechtalks/"
+                    id="wechat-icon"
+                    title="SSW on WeChat"
+                    href="https://mp.weixin.qq.com/s/jL4zEmzWM5VSTRu9DUW6-Q"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <FontAwesomeIcon icon={faYoutube} size="lg" />
-                  </a>
-                  <a
-                    className="unstyled social-media-icon"
-                    id="linkedin-icon"
-                    title="SSW on LinkedIn"
-                    href="https://www.linkedin.com/company/ssw/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <FontAwesomeIcon icon={faLinkedin} size="lg" />
+                    <FontAwesomeIcon icon={faWeixin} size="lg" />
+                    <span id="qr-code">
+                      <img
+                        src="http://www.ssw.com.au/ssw/Images/QRcode.jpg"
+                        alt="SSW QR Code"
+                        width="100"
+                        title="SSW WeChat QR Code"
+                        height="100"
+                      />
+                    </span>
                   </a>
                   <a
                     className="unstyled social-media-icon"
@@ -106,22 +105,23 @@ const Footer = () => {
                   </a>
                   <a
                     className="unstyled social-media-icon"
-                    id="wechat-icon"
-                    title="SSW on WeChat"
-                    href="https://mp.weixin.qq.com/s/jL4zEmzWM5VSTRu9DUW6-Q"
+                    id="linkedin-icon"
+                    title="SSW on LinkedIn"
+                    href="https://www.linkedin.com/company/ssw/"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <FontAwesomeIcon icon={faWeixin} size="lg" />
-                    <span id="qr-code">
-                      <img
-                        src="http://www.ssw.com.au/ssw/Images/QRcode.jpg"
-                        alt="SSW QR Code"
-                        width="100"
-                        title="SSW WeChat QR Code"
-                        height="100"
-                      />
-                    </span>
+                    <FontAwesomeIcon icon={faLinkedin} size="lg" />
+                  </a>
+                  <a
+                    className="unstyled social-media-icon"
+                    id="youtube-icon"
+                    title="SSW on YouTube"
+                    href="https://www.youtube.com/user/sswtechtalks/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FontAwesomeIcon icon={faYoutube} size="lg" />
                   </a>
                 </div>
               </div>

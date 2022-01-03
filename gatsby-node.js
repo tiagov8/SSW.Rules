@@ -3,6 +3,7 @@ const { createFilePath } = require('gatsby-source-filesystem');
 const appInsights = require('applicationinsights');
 const makePluginData = require('./src/helpers/plugin-data');
 const createRewriteMap = require('./src/helpers/createRewriteMap');
+const historyFeedGenerator = require('./src/helpers/historyFeedGenerator');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const path = require('path');
@@ -111,6 +112,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
           frontmatter {
             uri
+            title
             archivedreason
             related
             redirects
@@ -139,12 +141,32 @@ exports.createPages = async ({ graphql, actions }) => {
       count++;
       console.log('https://www.ssw.com.au/rules/' + node.frontmatter.uri);
     }
+    createPage({
+      path: node.frontmatter.uri,
+      component: ruleTemplate,
+      context: {
+        slug: node.fields.slug,
+        related: node.frontmatter.related ? node.frontmatter.related : [''],
+        uri: node.frontmatter.uri,
+        redirects: node.frontmatter.redirects,
+        file: `rules/${node.frontmatter.uri}/rule.md`,
+        title: node.frontmatter.title,
+      },
+    });
   });
-  console.log(count);
-  throw new Error();
+
+  const profilePage = require.resolve('./src/pages/profile.js');
+  createPage({
+    path: `${siteConfig.pathPrefix}/people/`,
+    matchPath: `${siteConfig.pathPrefix}/people/:gitHubUsername`,
+    component: profilePage,
+  });
+  if (count > 0) {
+    throw new Error('Rules found with no category');
+  }
 };
 
-exports.onPostBuild = async ({ store, pathPrefix }) => {
+exports.onPostBuild = async ({ store, pathPrefix, graphql }) => {
   const { pages } = store.getState();
   const pluginData = makePluginData(store, assetsManifest, pathPrefix);
   const rewrites = Array.from(pages.values())
@@ -165,4 +187,5 @@ exports.onPostBuild = async ({ store, pathPrefix }) => {
     ...new Map(rewrites.map((item) => [item.fromPath, item])).values(),
   ];
   await createRewriteMap.writeRewriteMapsFile(pluginData, allRewritesUnique);
+  await historyFeedGenerator.createHistoryFeed(pluginData, pages, graphql);
 };
