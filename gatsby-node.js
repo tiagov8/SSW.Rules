@@ -122,9 +122,49 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
 
+  const categoryTemplate = require.resolve('./src/templates/category.js');
+  const ruleTemplate = require.resolve('./src/templates/rule.js');
+
   var count = 0;
 
+  result.data.categories.nodes.forEach((node) => {
+    // Find any categories that can't resolve a rule
+    node.frontmatter.index.forEach((inCat) => {
+      var match = false;
+
+      result.data.rules.nodes.forEach((rulenode) => {
+        if (rulenode.frontmatter.uri == inCat) {
+          match = true;
+        }
+        if (rulenode.frontmatter.redirects) {
+          rulenode.frontmatter.redirects.forEach((redirect) => {
+            if (redirect == inCat) {
+              match = true;
+            }
+          });
+        }
+      });
+
+      if (match == false) {
+        count++;
+        console.log(node.parent.name + ' cannot find rule ' + inCat);
+      }
+    });
+
+    // Create the page for the category
+    createPage({
+      path: node.parent.name,
+      component: categoryTemplate,
+      context: {
+        slug: node.fields.slug,
+        index: node.frontmatter.index,
+        redirects: node.frontmatter.redirects,
+      },
+    });
+  });
+
   result.data.rules.nodes.forEach((node) => {
+    // Find any rules missing a category
     var match = false;
     if (!node.frontmatter.archivedreason) {
       result.data.categories.nodes.forEach((catNode) => {
@@ -139,8 +179,14 @@ exports.createPages = async ({ graphql, actions }) => {
     }
     if (match == false) {
       count++;
-      console.log('https://www.ssw.com.au/rules/' + node.frontmatter.uri);
+      console.log(
+        'https://www.ssw.com.au/rules/' +
+          node.frontmatter.uri +
+          ' is missing a category'
+      );
     }
+
+    // Create the page for the rule
     createPage({
       path: node.frontmatter.uri,
       component: ruleTemplate,
@@ -161,9 +207,6 @@ exports.createPages = async ({ graphql, actions }) => {
     matchPath: `${siteConfig.pathPrefix}/people/:gitHubUsername`,
     component: profilePage,
   });
-  if (count > 0) {
-    throw new Error('Rules found with no category');
-  }
 };
 
 exports.onPostBuild = async ({ store, pathPrefix, graphql }) => {
